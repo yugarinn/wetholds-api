@@ -1,11 +1,11 @@
 package internal
 
 import (
-    "fmt"
-    "errors"
-    "encoding/json"
-    "io/ioutil"
-    "net/http"
+	"encoding/json"
+	"errors"
+	"io/ioutil"
+	"log"
+	"net/http"
 	"strconv"
 )
 
@@ -54,7 +54,8 @@ func (result FetchForecastResult) CloudCovers() map[string][]int {
 }
 
 func FetchForecast(lat float64, lon float64) FetchForecastResult {
-    fmt.Println("fetching!")
+    log.Printf("fetching weather for %f, %f", lat, lon)
+
     params := []RequestQueryParameter{
         {name: "latitude", value: strconv.FormatFloat(lat, 'f', -1, 64)},
         {name: "longitude", value: strconv.FormatFloat(lon, 'f', -1, 64)},
@@ -62,6 +63,7 @@ func FetchForecast(lat float64, lon float64) FetchForecastResult {
         {name: "hourly", value: "precipitation_probability"},
         {name: "hourly", value: "cloudcover"},
         {name: "hourly", value: "windspeed_10m"},
+        {name: "past_days", value: "2"},
     }
 
     forecastResponse, _ := fetch("GET", "https://api.open-meteo.com/v1/forecast", params)

@@ -33,7 +33,9 @@ type CragWeather struct {
 func InitServer() {
     http.HandleFunc("/crags", cragsHandler)
 
-    log.Fatal(http.ListenAndServe(":9990", nil))
+	port := ":9990"
+	log.Printf("starting server on port %s", port)
+    log.Fatal(http.ListenAndServe(port, nil))
 }
 
 func cragsHandler(w http.ResponseWriter, r *http.Request) {
@@ -57,7 +59,7 @@ func cragsHandler(w http.ResponseWriter, r *http.Request) {
 func loadCrags() (list CragsList, isCached bool, err error) {
 	cachedCrags, isValidCache := GetCachedCrags()
 
-	if isValidCache {
+	if false || isValidCache {
 		return cachedCrags, true, nil
 	}
 

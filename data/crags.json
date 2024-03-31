@@ -132,6 +132,54 @@
       "disciplines": [
         "boulder"
       ]
+    },
+    {
+      "name": "Pinares de San Antón",
+      "lat": 36.7418668,
+      "lon": -4.365711,
+      "disciplines": [
+        "sport"
+      ]
+    },
+    {
+      "name": "Siurana",
+      "lat": 41.2632403,
+      "lon": 0.9392754,
+      "disciplines": [
+        "sport"
+      ]
+    },
+    {
+      "name": "Collegats",
+      "lat": 42.2631664,
+      "lon": 0.9951199,
+      "disciplines": [
+        "sport"
+      ]
+    },
+    {
+      "name": "La Raja de Mijas",
+      "lat": 36.5921843,
+      "lon": -4.6395193,
+      "disciplines": [
+        "sport"
+      ]
+    },
+    {
+      "name": "Los Vados",
+      "lat": 36.7895921,
+      "lon": -3.5384127,
+      "disciplines": [
+        "sport"
+      ]
+    },
+    {
+      "name": "Montgrony",
+      "lat": 42.266164,
+      "lon": 2.0833898,
+      "disciplines": [
+        "sport"
+      ]
     }
   ]
 }
