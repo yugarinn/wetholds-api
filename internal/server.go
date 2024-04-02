@@ -3,7 +3,6 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -64,7 +63,7 @@ func loadCrags() (list CragsList, isCached bool, err error) {
 	}
 
 	dataPath := os.Getenv("DATA_PATH")
-	file, _ := ioutil.ReadFile(fmt.Sprintf("%s/crags.json", dataPath))
+	file, _ := os.ReadFile(fmt.Sprintf("%s/crags.json", dataPath))
 	crags := CragsList{}
 
 	unmarshalError := json.Unmarshal([]byte(file), &crags)

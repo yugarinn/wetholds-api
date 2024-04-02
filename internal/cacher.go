@@ -3,7 +3,6 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -36,7 +35,7 @@ func CacheCragsResponse(crags CragsList) {
 
 func GetCachedCrags() (list CragsList, success bool) {
 	cacheFoldername := fmt.Sprintf("%s/cache", os.Getenv("DATA_PATH"))
-	caches, readDirErr := ioutil.ReadDir(cacheFoldername)
+	caches, readDirErr := os.ReadDir(cacheFoldername)
 
     if readDirErr != nil || len(caches) == 0 {
         return CragsList{}, false
@@ -49,7 +48,7 @@ func GetCachedCrags() (list CragsList, success bool) {
 	}
 
 	cacheFilename := fmt.Sprintf("%s/cache/%s", os.Getenv("DATA_PATH"), cachedFilename)
-	cachedFile, _ := ioutil.ReadFile(cacheFilename)
+	cachedFile, _ := os.ReadFile(cacheFilename)
 	crags := CragsList{}
 
 	unmarshalErr := json.Unmarshal([]byte(cachedFile), &crags)
@@ -87,7 +86,7 @@ func fileHasExpired(cachedFilename string) bool {
 
 func cleanCache() {
 	cacheFoldername := fmt.Sprintf("%s/cache", os.Getenv("DATA_PATH"))
-	caches, readDirErr := ioutil.ReadDir(cacheFoldername)
+	caches, readDirErr := os.ReadDir(cacheFoldername)
 
     if readDirErr != nil {
         return

@@ -3,8 +3,8 @@ package internal
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
 	"log"
+    "io"
 	"net/http"
 	"strconv"
 )
@@ -97,7 +97,7 @@ func fetch(method string, url string, params []RequestQueryParameter) ([]byte, e
     if err != nil {
         return nil, err
     } else {
-        payload, _ := ioutil.ReadAll(resp.Body)
+        payload, _ := io.ReadAll(resp.Body)
 
         return payload, nil
     }
