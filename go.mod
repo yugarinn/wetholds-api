@@ -1,6 +1,6 @@
 module github.com/yugarinn/wetholds-api
 
-go 1.18
+go 1.22
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect

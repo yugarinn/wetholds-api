@@ -1,0 +1,8 @@
+services:
+    wetholds-api:
+        restart: "no"
+        build: .
+        ports:
+            - 9990:9990
+        volumes:
+          - .:/wetholds-api
