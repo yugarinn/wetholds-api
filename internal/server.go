@@ -29,6 +29,12 @@ type CragWeather struct {
 	CloudsCover              map[string][]int `json:"cloudCover"`
 }
 
+type CragFilters struct {
+	Location    string
+	Disciplines string
+	Name        string
+}
+
 func InitServer() {
     http.HandleFunc("/crags", cragsHandler)
 
@@ -37,8 +43,8 @@ func InitServer() {
     log.Fatal(http.ListenAndServe(port, nil))
 }
 
-func cragsHandler(w http.ResponseWriter, r *http.Request) {
-	go logRequest(r)
+func cragsHandler(writer http.ResponseWriter, request *http.Request) {
+	go logRequest(request)
 
 	crags, isCached, loadErr := loadCrags()
 
@@ -50,9 +56,24 @@ func cragsHandler(w http.ResponseWriter, r *http.Request) {
 		go CacheCragsResponse(crags)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	json.NewEncoder(w).Encode(crags)
+	filters := parseQueryFilters(request)
+	crags = filterCrags(crags, filters)
+	crags = sortCragsByDistance(crags, filters)
+
+	writer.Header().Set("Content-Type", "application/json")
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+
+	json.NewEncoder(writer).Encode(crags)
+}
+
+func parseQueryFilters(request *http.Request) CragFilters {
+	queryParams := request.URL.Query()
+
+	return CragFilters{
+		Location:    queryParams.Get("location"),
+		Disciplines: queryParams.Get("disciplines"),
+		Name:        queryParams.Get("name"),
+	}
 }
 
 func loadCrags() (list CragsList, isCached bool, err error) {
